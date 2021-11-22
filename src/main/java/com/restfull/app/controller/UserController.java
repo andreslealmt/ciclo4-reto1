@@ -35,6 +35,10 @@ public class UserController {
 	@PostMapping("/new")
 	@ResponseStatus(HttpStatus.CREATED)
 	public User save(@RequestBody User user) {
+		Optional<User> oUser = userServiceIml.findByEmail(user.getEmail());
+		if(oUser.isPresent()) {
+			return user;
+		}
 		return userServiceIml.save(user);
 	}
 	
